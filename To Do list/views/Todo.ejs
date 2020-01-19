@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="/css/project.css">
+    
+</head>
+<body bgcolor="black">
+
+     <div id="maindiv" > 
+         
+        
+
+        <!-- THIS IS HEADING OF THE TODO LIST -->
+    <div id="header">      <h1> <a href="#"> TODO LIST</a> </h1>  </div>
+
+
+        <!-- FROM HERE THE LEFT SECTION OF THE TODO LIST STARTS -->
+        <div id="leftdiv">
+            <h1>TASKS</h1><hr>
+
+            <!-- NOW THESE ARE THE BUTTON WHICH IS PRESENT IN THE LEFT DIV -->
+
+
+            <!-- ALL TASKS BUTTON WHICH SHOW THE TASKS PRESENT IN DATABASE -->
+            <form action="/tasks">
+            <button type="submit" name="tasktype" value=""><div><i class="fas fa-tasks"></i></div>&emsp;ALL TASKS</button>
+            </form>
+
+            <!-- PERSONAL BUTTON WHICH SHOW THE TASK RELATED TO PERSONAL ONLY-->
+            <form action="/tasks">
+             <button type="submit" name="tasktype" value="PERSONAL"><div><i class="fas fa-user-clock"></i></div>&emsp;PERSONAL</button>
+            </form>
+
+            <!-- CLEANING BUTTON WHICH SHOW THE TASK RELATED TO CLEANING ONLY -->
+            <form action="/tasks">
+                <button type="submit" name="tasktype" value="CLEANING"><div><i class="fas fa-broom"></i></div>&emsp;CLEANING</button>
+            </form>
+
+            <!-- WORK BUTTON WHICH SHOW THE TASK RELATED TO WORK ONLY-->
+            <form action="/tasks">
+                <button type="submit" name="tasktype" value="WORK"><div style="margin-left: -50px;"><i class="fas fa-briefcase"></i></div>&emsp;WORK</button>
+            </form>
+
+            <!-- SCHOOL BUTTON WHICH SHOW THE TASK RELATED TO SCHOOLS ONLY-->
+            <form action="/tasks">
+              <button type="submit" name="tasktype" value="SCHOOL"><div style="margin-left: -30px;"><i class="fas fa-school"></i></div style="margin-left: -30px;">&emsp;SCHOOL</button>
+            </form>
+
+          
+
+        </div>
+
+            <!--=============================  END OF THE LEFT DIV BOX=================================================  -->
+
+        <!-- FROM HERE MID SECTION OF THE TODO LIST STARTS -->
+    <div id="middiv">
+
+        <form action="/addtask" method="GET">
+            <header>
+                <!-- THIS IS THE IMAGE WHICH IS SHOW IN THE MIDDLE SECTION OF THE TODO LSIT -->
+                <div id="taskimage"><img  src="/img/mentor.png" alt=""></div>
+                
+            </header>
+            
+            
+        <main>
+
+            <br><br><br>
+            <section>
+                <!-- THIS SECTION IS RESPONSIBLE FOR THE USER INPUT IT WILL TAKE THE TASK NAME -->
+                <input type="text" name="task" id="task" placeholder="ENTER YOUR TASK">
+                <br><br>
+            </section>
+
+
+
+
+            <section>
+
+                <!-- THIS SECTION TAKES THE INPUT FROM THE USER WHAT TYPE OF TASK HE WANTS TO ADD IN THE TODO LIST -->
+               <select name="tasktype" id="option1">
+
+                    <option value="Choose Your Task">Choose Your Task</option>
+                    <option value="PERSONAL">Personal</option>
+                    <option value="WORK">Work</option>
+                    <option value="SCHOOL">School</option>
+                    <option value="CLEANING">Cleaning</option>
+                    <option value="OTHER">Other</option>
+                    
+               </select>
+
+
+               <!-- THIS SECTION TAKE INPUT DATA AS A DATE TILL WHAT TIME HE WANT TO COMPLETE THIS TASK -->
+                <input type="date" name="taskdate" id="date">
+            </section><br>
+
+
+
+
+            <section>
+                <!-- FINALLY BY ON CLICK OF THIS BUTTON THE TASK IS ADDED TO THE DATABASE AND START APPERAING IN RIGHT SECTION -->
+                <button  id="addtask" class="btn info" name="ADD TASK" value="ADD TASK">ADD TASK</button>
+            </section><br><br>
+
+
+
+        </main>
+    </form>
+</div>
+            <!--=============================  END OF THE MID DIV BOX=================================================  -->
+
+
+
+<!-- THIS DIV CONTAINING THE OUPUT OF THE ADDED TASK IN THE DATABASE -->
+
+    <div id="rightdiv">
+
+        <section>
+            <ol>
+                
+            <%for(let x of Data){%>
+
+
+                <div id="showtask-outerbox">
+                    <!-- THIS SHOW NAME OF THE TASK WHICH IS ADDED IN THE DATABASE -->
+                    <div class="icon"><i class="far fa-smile-wink"></i></div>&emsp;
+                    <div style="width: 250px; height: 40px;">  <h2><%= x.task%></h2>   </div>
+
+                    <!-- THIS SHOW NAME OF THE TASK DELETE BUTTON WHICH IS ADDED IN THE DATABASE -->
+                    <div><a href="/deletetask/?id=<%=x.id%>">
+                    <div id="deletebox" class="icon" ><i class="fas fa-trash-alt" ></i></div></a><h2><br></div> <br>
+                        
+                    <!-- THIS SHOW NAME OF THE TASK-DATE WHICH IS ADDED IN THE DATABASE -->
+                    <div class="icon"><i class="far fa-calendar-alt"></i></div>&emsp;<%=x.taskdate%>&emsp;
+
+
+                    <!-- THIS SHOW NAME OF THE TASK-TYPE WHICH IS ADDED IN THE DATABASE -->
+                    <div id="showtask-tasktype"><%=x.tasktype%></div><br>
+                        
+                    </div>
+                    <br>
+                <%}%>
+
+                <!-- IF NO DATA FOUND THEN THIS DIV BOX COMES IN TO THE ACTION WITH A MESSAGE ->'NO DATA FOUND' -->
+                <% if(Object.keys(Data).length === 0){%>
+                    <div id="showtask-outerbox" "><h2 style="color: #91149B ;">
+                        <div class="icon"><i class="fas fa-frown"></i></div> OPPS!!  No Task Found</h2><br><h3 style="color: dodgerblue;">Please add the task for this category</h3></div>
+                <%}%>
+            </ol>
+            
+        </section>
+    
+    </div>
+            <!--=============================  END OF THE RIGHT DIV BOX=================================================  -->
+
+
+<!-- THIS IS THE FOOTER PART OF THE TODO LIST -->
+<div id="footer"></div>
+
+
+</div> 
+</body>
+</html>
